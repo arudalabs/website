@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import GlitchText from "@/components/GlitchText";
-import CollabCursors from "@/components/CollabCursors";
+
+function scrollTo(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -10,357 +13,317 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col items-center w-full bg-[#0A0A0A] py-16 px-6 md:py-[100px] md:px-[120px] overflow-hidden">
-      {/* Badge */}
       <div className="flex items-center justify-center gap-[8px] h-[32px] px-[12px] md:px-[16px] bg-[#1A1A1A] border-2 border-[#FFD600]">
         <div className="w-[8px] h-[8px] bg-[#FFD600] shrink-0" />
         <span className="font-ibm-mono text-[9px] md:text-[11px] font-bold text-[#FFD600] tracking-[1px] md:tracking-[2px] whitespace-nowrap">
-          [NEW] // VERSION 2.0 NOW LIVE
+          [REV.C] // AR-12 MODULAR RACK IN PROTOTYPE
         </span>
       </div>
 
-      <div className="h-8 md:h-[32px]" />
+      <div className="h-8" />
 
-      {/* Headline */}
       <h1 className="font-grotesk text-[clamp(32px,10vw,96px)] font-bold text-[#F5F5F0] tracking-[-1px] leading-none text-center w-full max-w-[1100px]">
-        <GlitchText text="BUILD WITHOUT" speed={45} delay={100} />
+        <GlitchText text="INFRASTRUCTURE" speed={45} delay={100} />
         <br />
-        <GlitchText text="LIMITS." speed={45} delay={400} />
-      </h1>
-      <h1 className="font-grotesk text-[clamp(32px,10vw,96px)] font-bold text-[#FFD600] tracking-[-1px] leading-none text-center w-full max-w-[1100px]">
-        <GlitchText text="PIXEL-PERFECT." speed={45} delay={700} />
+        <GlitchText text="YOU CAN" speed={45} delay={500} />{" "}
+        <span className="text-[#FFD600]">
+          <GlitchText text="REBUILD." speed={45} delay={800} />
+        </span>
       </h1>
 
-      <div className="h-8 md:h-[32px]" />
+      <div className="h-8" />
 
-      {/* Subheading */}
-      <p className="font-ibm-mono text-[13px] md:text-[15px] text-[#888888] tracking-[1px] leading-[1.6] text-center w-full max-w-[800px]">
-        THE INDUSTRIAL-GRADE DESIGN SYSTEM FOR BUILDERS WHO DON&apos;T
-        COMPROMISE.
-        <br />
-        FROM PIXEL 01 TO PRODUCTION DEPLOY.
+      <p className="font-ibm-mono text-[13px] md:text-[15px] text-[#888888] tracking-[1px] leading-[1.6] text-center w-full max-w-[820px] text-pretty">
+        ARUDA LABS DESIGNS MODULAR SERVER RACKS, NAS CHASSIS, AND HOMELAB
+        HARDWARE. OPEN SPECS. STANDARD PARTS. BUILT TO BE EXTENDED, NOT REPLACED.
       </p>
 
       <div className="h-10 md:h-[48px]" />
 
-      {/* CTAs */}
-      <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-[16px] w-full sm:w-auto">
-        <button className="flex items-center justify-center w-full sm:w-[220px] h-[56px] bg-[#FFD600] hover:bg-[#e6c200] transition-colors">
+      <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+        <button
+          type="button"
+          onClick={() => scrollTo("projects")}
+          className="flex items-center justify-center w-full sm:w-[220px] h-[56px] bg-[#FFD600] hover:bg-[#e6c200] transition-colors"
+        >
           <span className="font-grotesk text-[12px] font-bold text-[#0A0A0A] tracking-[2px]">
-            START BUILDING FREE
+            EXPLORE PROJECTS
           </span>
         </button>
-        <button className="flex items-center justify-center w-full sm:w-[200px] h-[56px] bg-[#0A0A0A] border-2 border-[#3D3D3D] hover:border-[#888888] transition-colors">
+        <button
+          type="button"
+          onClick={() => scrollTo("roadmap")}
+          className="flex items-center justify-center w-full sm:w-[220px] h-[56px] bg-[#0A0A0A] border-2 border-[#3D3D3D] hover:border-[#888888] transition-colors"
+        >
           <span className="font-ibm-mono text-[12px] text-[#888888] tracking-[2px]">
-            VIEW DOCS &gt;
+            VIEW ROADMAP &gt;
           </span>
         </button>
       </div>
 
-      <div className="h-6 md:h-[24px]" />
+      <div className="h-6" />
 
       <p className="font-ibm-mono text-[11px] text-[#555555] tracking-[2px] text-center">
-        NO CREDIT CARD // FREE FOREVER PLAN // 10,000+ BUILDERS
+        {"19\" & 10\" FORMATS // OPEN CAD FILES // TOOL-LESS ASSEMBLY"}
       </p>
 
       <div className="h-12 md:h-[64px]" />
 
-      {/* Animated Design Interface */}
-      <div
-        className="w-full max-w-[1100px] bg-[#0F0F0F] overflow-hidden"
-        style={{ border: "2px solid #2D2D2D" }}
-      >
-        <DesignInterfaceSVG mounted={mounted} />
+      <div className="w-full max-w-[1100px] bg-[#0F0F0F] overflow-hidden border-2 border-[#2D2D2D]">
+        <RackSVG mounted={mounted} />
       </div>
-
-      {/* Collab cursors on the full hero */}
-      <CollabCursors />
     </section>
   );
 }
 
-/* ──────────────────────────────── SVG ──────────────────────────────── */
+type Unit = { u: number; label: string; kind: "patch" | "switch" | "server" | "nas" | "ups" | "blank"; color: string };
 
-const layers = [
-  { label: "FRAME / HERO", color: "#FFD600", indent: 0, active: true },
-  { label: "NAVBAR", color: "#888", indent: 12 },
-  { label: "HEADLINE", color: "#4ADE80", indent: 12 },
-  { label: "SUBTEXT", color: "#888", indent: 12 },
-  { label: "CTA GROUP", color: "#FF6B35", indent: 12 },
-  { label: "BTN / PRIMARY", color: "#FF6B35", indent: 24 },
-  { label: "BTN / GHOST", color: "#888", indent: 24 },
-  { label: "MEDIA BLOCK", color: "#60A5FA", indent: 12 },
-  { label: "FOOTER", color: "#888", indent: 0 },
+const units: Unit[] = [
+  { u: 1, label: "PATCH PANEL 24P", kind: "patch", color: "#888" },
+  { u: 1, label: "SWITCH 10GBE", kind: "switch", color: "#60A5FA" },
+  { u: 1, label: "NODE-01 / PROXMOX", kind: "server", color: "#4ADE80" },
+  { u: 1, label: "NODE-02 / PROXMOX", kind: "server", color: "#4ADE80" },
+  { u: 1, label: "BLANK", kind: "blank", color: "#333" },
+  { u: 2, label: "AR-N8 NAS / 8 BAY", kind: "nas", color: "#FFD600" },
+  { u: 1, label: "BLANK", kind: "blank", color: "#333" },
+  { u: 2, label: "UPS 1500VA", kind: "ups", color: "#FF6B35" },
+  { u: 2, label: "SHELF / MINI PC", kind: "blank", color: "#555" },
 ];
 
-const inspectProps = [
-  { key: "W", val: "1100px" },
-  { key: "H", val: "580px" },
-  { key: "X", val: "0" },
-  { key: "Y", val: "0" },
-  { key: "FILL", val: "#0F0F0F", swatch: "#0F0F0F" },
-  { key: "BORDER", val: "#FFD600", swatch: "#FFD600" },
-  { key: "RADIUS", val: "0px" },
-  { key: "OPACITY", val: "100%" },
+const telemetry = [
+  { key: "INLET", val: "24.1°C", pct: 0.42, color: "#4ADE80" },
+  { key: "EXHAUST", val: "31.8°C", pct: 0.58, color: "#FFD600" },
+  { key: "POWER", val: "312W", pct: 0.36, color: "#FF6B35" },
+  { key: "NET", val: "6.2 GB/S", pct: 0.62, color: "#60A5FA" },
 ];
 
-const tokens = [
-  { name: "primary", hex: "#FFD600" },
-  { name: "accent", hex: "#FF6B35" },
-  { name: "surface", hex: "#111111" },
-  { name: "text", hex: "#F5F5F0" },
-  { name: "muted", hex: "#555555" },
-];
+const UNIT_H = 32;
+const RACK_X = 400;
+const RACK_W = 300;
+const RACK_Y = 60;
 
-const codeLines = [
-  { w: 80, color: "#4ADE80", x: 325 },
-  { w: 140, color: "#60A5FA", x: 345 },
-  { w: 100, color: "#888", x: 355 },
-  { w: 120, color: "#FF6B35", x: 345 },
-  { w: 90, color: "#888", x: 355 },
-  { w: 160, color: "#4ADE80", x: 355 },
-  { w: 80, color: "#888", x: 345 },
-  { w: 110, color: "#60A5FA", x: 325 },
-];
+function RackSVG({ mounted }: { mounted: boolean }) {
+  let cursor = 0;
+  const placed = units.map((unit) => {
+    const y = RACK_Y + cursor * UNIT_H;
+    cursor += unit.u;
+    return { ...unit, y, start: cursor - unit.u + 1 };
+  });
+  const totalU = cursor;
+  const rackH = totalU * UNIT_H;
 
-const handles: [number, number][] = [
-  [280, 90], [570, 90], [860, 90],
-  [280, 280], [860, 280],
-  [280, 470], [570, 470], [860, 470],
-];
-
-const tickerItems = [
-  "BUTTON", "INPUT", "CARD", "MODAL", "BADGE",
-  "TOOLTIP", "TOGGLE", "SLIDER", "TABLE", "NAVBAR",
-];
-
-function DesignInterfaceSVG({ mounted }: { mounted: boolean }) {
   return (
     <>
-      {/* Global CSS keyframes for SVG animations */}
       <style>{`
-        @keyframes hero-blink { 0%,100%{opacity:1} 50%{opacity:0} }
-        @keyframes hero-scan { 0%{transform:translateY(-580px)} 100%{transform:translateY(580px)} }
-        @keyframes hero-pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
-        @keyframes hero-ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-700px)} }
-        .hero-cursor { animation: hero-blink 1.1s step-end infinite; }
-        .hero-scan { animation: hero-scan 4s linear infinite; }
-        .hero-pulse { animation: hero-pulse 2s ease-in-out infinite; }
-        .hero-ticker-track { animation: hero-ticker 14s linear infinite; }
+        @keyframes ar-blink { 0%,100%{opacity:1} 50%{opacity:0.15} }
+        @keyframes ar-scan { 0%{transform:translateY(-40px)} 100%{transform:translateY(540px)} }
+        @keyframes ar-pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+        .ar-led { animation: ar-blink 1.2s steps(2, jump-none) infinite; }
+        .ar-scan { animation: ar-scan 5s linear infinite; }
+        .ar-pulse { animation: ar-pulse 2s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) { .ar-led, .ar-scan, .ar-pulse { animation: none; } }
       `}</style>
 
       <svg
-        viewBox="0 0 1100 580"
+        viewBox="0 0 1100 540"
         xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Rack elevation diagram of a 12U Aruda Labs modular rack with patch panel, switch, compute nodes, an 8-bay NAS, and a UPS, alongside live telemetry readouts"
         style={{ display: "block", width: "100%", height: "auto" }}
       >
-        {/* BG */}
-        <rect width="1100" height="580" fill="#0F0F0F" />
+        <rect width="1100" height="540" fill="#0F0F0F" />
 
-        {/* Scanline */}
-        <rect className="hero-scan" x="0" y="0" width="1100" height="6" fill="rgba(255,214,0,0.03)" />
-
-        {/* Grid dots */}
         {Array.from({ length: 22 }, (_, c) =>
-          Array.from({ length: 12 }, (_, r) => (
+          Array.from({ length: 11 }, (_, r) => (
             <circle key={`d${c}-${r}`} cx={c * 50 + 25} cy={r * 50 + 25} r="1" fill="#1A1A1A" />
           ))
         )}
 
-        {/* ── LEFT PANEL ── */}
-        <rect x="0" y="0" width="200" height="580" fill="#111111" />
-        <line x1="200" y1="0" x2="200" y2="580" stroke="#2D2D2D" strokeWidth="1" />
+        <rect className="ar-scan" x="220" y="0" width="660" height="4" fill="rgba(255,214,0,0.05)" />
 
-        {/* Panel header */}
-        <rect x="0" y="0" width="200" height="36" fill="#161616" />
-        <text x="12" y="23" fontFamily="monospace" fontSize="9" fill="#FFD600" letterSpacing={2} fontWeight="700">LAYERS</text>
-        <text x="176" y="23" fontFamily="monospace" fontSize="12" fill="#444">+</text>
+        {/* Left panel: elevation list */}
+        <rect x="0" y="0" width="220" height="540" fill="#111111" />
+        <line x1="220" y1="0" x2="220" y2="540" stroke="#2D2D2D" />
+        <rect x="0" y="0" width="220" height="36" fill="#161616" />
+        <text x="14" y="23" fontFamily="monospace" fontSize="9" fill="#FFD600" letterSpacing={2} fontWeight="700">ELEVATION / AR-12</text>
+        {placed.map((p, i) => (
+          <g
+            key={i}
+            style={{
+              opacity: mounted ? 1 : 0,
+              transition: `opacity 0.4s ease ${i * 0.07}s`,
+            }}
+          >
+            {p.kind === "nas" && <rect x="0" y={44 + i * 30} width="220" height="30" fill="#1E1E1E" />}
+            {p.kind === "nas" && <rect x="0" y={44 + i * 30} width="2" height="30" fill="#FFD600" />}
+            <text x="14" y={63 + i * 30} fontFamily="monospace" fontSize="8" fill="#444">
+              U{String(p.start).padStart(2, "0")}
+            </text>
+            <circle cx="46" cy={60 + i * 30} r="3" fill={p.color} />
+            <text x="56" y={63 + i * 30} fontFamily="monospace" fontSize="8.5" fill={p.kind === "nas" ? "#F5F5F0" : "#666"} letterSpacing={0.5}>
+              {p.label}
+            </text>
+          </g>
+        ))}
 
-        {/* Layer list */}
-        {layers.map((l, i) => {
-          const y = 36 + i * 32;
+        {/* Rack frame */}
+        <text x={RACK_X} y={RACK_Y - 18} fontFamily="monospace" fontSize="8" fill="#FFD600" letterSpacing={1}>
+          AR-12 / 19&quot; / 12U / 600MM DEPTH
+        </text>
+        <rect x={RACK_X - 24} y={RACK_Y - 8} width={RACK_W + 48} height={rackH + 16} fill="none" stroke="#2D2D2D" strokeWidth="2" />
+        <rect x={RACK_X - 18} y={RACK_Y} width="14" height={rackH} fill="#161616" />
+        <rect x={RACK_X + RACK_W + 4} y={RACK_Y} width="14" height={rackH} fill="#161616" />
+        {Array.from({ length: totalU * 3 }, (_, i) => (
+          <g key={`hole${i}`}>
+            <rect x={RACK_X - 13} y={RACK_Y + 4 + i * (UNIT_H / 3)} width="4" height="4" fill="#0A0A0A" />
+            <rect x={RACK_X + RACK_W + 9} y={RACK_Y + 4 + i * (UNIT_H / 3)} width="4" height="4" fill="#0A0A0A" />
+          </g>
+        ))}
+        {Array.from({ length: totalU }, (_, i) => (
+          <text key={`un${i}`} x={RACK_X - 44} y={RACK_Y + i * UNIT_H + 20} fontFamily="monospace" fontSize="7" fill="#333">
+            {String(i + 1).padStart(2, "0")}
+          </text>
+        ))}
+
+        {placed.map((p, i) => {
+          const h = p.u * UNIT_H - 2;
           return (
             <g
-              key={i}
+              key={`unit${i}`}
               style={{
                 opacity: mounted ? 1 : 0,
-                transform: mounted ? "translateY(0)" : "translateY(6px)",
-                transition: `opacity 0.4s ease ${i * 0.08}s, transform 0.4s ease ${i * 0.08}s`,
+                transform: mounted ? "translateX(0)" : "translateX(-12px)",
+                transition: `opacity 0.4s ease ${0.2 + i * 0.07}s, transform 0.4s ease ${0.2 + i * 0.07}s`,
               }}
             >
-              {l.active && <rect x="0" y={y} width="200" height="32" fill="#1E1E1E" />}
-              {l.active && <rect x="0" y={y} width="2" height="32" fill="#FFD600" />}
-              <circle cx={20 + l.indent} cy={y + 16} r="3" fill={l.color} opacity="0.8" />
-              <text x={32 + l.indent} y={y + 20} fontFamily="monospace" fontSize="9" fill={l.active ? "#F5F5F0" : "#555"} letterSpacing={0.5}>
-                {l.label}
-              </text>
+              <rect
+                x={RACK_X}
+                y={p.y + 1}
+                width={RACK_W}
+                height={h}
+                fill={p.kind === "blank" ? "#121212" : "#1A1A1A"}
+                stroke={p.kind === "nas" ? "#FFD600" : "#262626"}
+                strokeWidth={p.kind === "nas" ? 1.5 : 1}
+                strokeDasharray={p.kind === "nas" ? "4 2" : undefined}
+              />
+              {p.kind === "patch" &&
+                Array.from({ length: 24 }, (_, k) => (
+                  <rect key={k} x={RACK_X + 30 + k * 10} y={p.y + 11} width="7" height="9" fill="#0A0A0A" stroke="#333" strokeWidth="0.5" />
+                ))}
+              {p.kind === "switch" &&
+                Array.from({ length: 16 }, (_, k) => (
+                  <g key={k}>
+                    <rect x={RACK_X + 20 + k * 14} y={p.y + 11} width="10" height="9" fill="#0A0A0A" stroke="#333" strokeWidth="0.5" />
+                    <rect
+                      className={k % 3 === 0 ? "ar-led" : undefined}
+                      style={{ animationDelay: `${k * 0.13}s` }}
+                      x={RACK_X + 22 + k * 14}
+                      y={p.y + 7}
+                      width="3"
+                      height="2"
+                      fill="#60A5FA"
+                    />
+                  </g>
+                ))}
+              {p.kind === "server" && (
+                <>
+                  {Array.from({ length: 4 }, (_, k) => (
+                    <rect key={k} x={RACK_X + 16 + k * 40} y={p.y + 9} width="34" height="13" fill="#111" stroke="#2D2D2D" strokeWidth="0.5" />
+                  ))}
+                  {Array.from({ length: 10 }, (_, k) => (
+                    <rect key={`v${k}`} x={RACK_X + 190 + k * 6} y={p.y + 9} width="2" height="13" fill="#222" />
+                  ))}
+                  <circle className="ar-led" style={{ animationDelay: `${i * 0.3}s` }} cx={RACK_X + RACK_W - 16} cy={p.y + 16} r="2.5" fill="#4ADE80" />
+                </>
+              )}
+              {p.kind === "nas" &&
+                Array.from({ length: 8 }, (_, k) => (
+                  <g key={k}>
+                    <rect x={RACK_X + 12 + k * 35} y={p.y + 8} width="30" height="46" fill="#111" stroke="#333" strokeWidth="0.75" />
+                    <rect x={RACK_X + 16 + k * 35} y={p.y + 14} width="22" height="2" fill="#2D2D2D" />
+                    <rect x={RACK_X + 16 + k * 35} y={p.y + 19} width="22" height="2" fill="#2D2D2D" />
+                    <circle
+                      className="ar-led"
+                      style={{ animationDelay: `${k * 0.17}s` }}
+                      cx={RACK_X + 27 + k * 35}
+                      cy={p.y + 46}
+                      r="2"
+                      fill={k === 6 ? "#FF6B35" : "#FFD600"}
+                    />
+                  </g>
+                ))}
+              {p.kind === "ups" && (
+                <>
+                  <rect x={RACK_X + 20} y={p.y + 16} width="90" height="30" fill="#0A0A0A" stroke="#333" strokeWidth="0.75" />
+                  <text x={RACK_X + 30} y={p.y + 35} fontFamily="monospace" fontSize="9" fill="#FF6B35">100% / 21MIN</text>
+                  {Array.from({ length: 14 }, (_, k) => (
+                    <rect key={k} x={RACK_X + 140 + k * 10} y={p.y + 14} width="4" height="34" fill="#202020" />
+                  ))}
+                </>
+              )}
+              {p.kind === "blank" && p.u === 2 && (
+                <>
+                  <rect x={RACK_X + 30} y={p.y + 22} width="60" height="38" fill="#1A1A1A" stroke="#2D2D2D" strokeWidth="0.75" />
+                  <rect x={RACK_X + 110} y={p.y + 22} width="60" height="38" fill="#1A1A1A" stroke="#2D2D2D" strokeWidth="0.75" />
+                  <rect x={RACK_X + 190} y={p.y + 22} width="60" height="38" fill="#1A1A1A" stroke="#2D2D2D" strokeWidth="0.75" />
+                </>
+              )}
             </g>
           );
         })}
 
-        {/* ── RIGHT PANEL ── */}
-        <rect x="899" y="0" width="201" height="580" fill="#111111" />
-        <line x1="899" y1="0" x2="899" y2="580" stroke="#2D2D2D" strokeWidth="1" />
-        <rect x="899" y="0" width="201" height="36" fill="#161616" />
-        <text x="912" y="23" fontFamily="monospace" fontSize="9" fill="#FFD600" letterSpacing={2} fontWeight="700">INSPECT</text>
+        {/* Dimension guide */}
+        <line x1={RACK_X + RACK_W + 44} y1={RACK_Y} x2={RACK_X + RACK_W + 44} y2={RACK_Y + rackH} stroke="#FF6B35" strokeWidth="0.75" />
+        <line x1={RACK_X + RACK_W + 38} y1={RACK_Y} x2={RACK_X + RACK_W + 50} y2={RACK_Y} stroke="#FF6B35" strokeWidth="0.75" />
+        <line x1={RACK_X + RACK_W + 38} y1={RACK_Y + rackH} x2={RACK_X + RACK_W + 50} y2={RACK_Y + rackH} stroke="#FF6B35" strokeWidth="0.75" />
+        <text x={RACK_X + RACK_W + 52} y={RACK_Y + rackH / 2} fontFamily="monospace" fontSize="7" fill="#FF6B35">533MM</text>
 
-        {/* Inspect props */}
-        {inspectProps.map((p, i) => {
-          const y = 56 + i * 26;
+        {/* Right panel: telemetry */}
+        <rect x="880" y="0" width="220" height="540" fill="#111111" />
+        <line x1="880" y1="0" x2="880" y2="540" stroke="#2D2D2D" />
+        <rect x="880" y="0" width="220" height="36" fill="#161616" />
+        <text x="894" y="23" fontFamily="monospace" fontSize="9" fill="#FFD600" letterSpacing={2} fontWeight="700">TELEMETRY</text>
+        {telemetry.map((t, i) => {
+          const y = 64 + i * 52;
           return (
-            <g
-              key={i}
-              style={{
-                opacity: mounted ? 1 : 0,
-                transition: `opacity 0.4s ease ${0.1 + i * 0.06}s`,
-              }}
-            >
-              <text x="912" y={y} fontFamily="monospace" fontSize="8" fill="#555" letterSpacing={1}>{p.key}</text>
-              {p.swatch && <rect x="970" y={y - 9} width="10" height="10" fill={p.swatch} rx="1" />}
-              <text x={p.swatch ? "986" : "970"} y={y} fontFamily="monospace" fontSize="8" fill="#888" letterSpacing={0.5}>{p.val}</text>
+            <g key={t.key} style={{ opacity: mounted ? 1 : 0, transition: `opacity 0.4s ease ${0.3 + i * 0.08}s` }}>
+              <text x="894" y={y} fontFamily="monospace" fontSize="8" fill="#555" letterSpacing={1}>{t.key}</text>
+              <text x="1086" y={y} textAnchor="end" fontFamily="monospace" fontSize="8" fill="#AAA">{t.val}</text>
+              <rect x="894" y={y + 10} width="192" height="6" fill="#1A1A1A" />
+              <rect
+                x="894"
+                y={y + 10}
+                width={mounted ? 192 * t.pct : 0}
+                height="6"
+                fill={t.color}
+                style={{ transition: `width 1s ease ${0.4 + i * 0.1}s` }}
+              />
             </g>
           );
         })}
-
-        {/* Separator + Tokens title */}
-        <line x1="899" y1="278" x2="1100" y2="278" stroke="#222" strokeWidth="1" />
-        <text x="912" y="300" fontFamily="monospace" fontSize="9" fill="#FFD600" letterSpacing={2} fontWeight="700">TOKENS</text>
-
-        {/* Token swatches */}
-        {tokens.map((t, i) => {
-          const y = 316 + i * 28;
-          return (
-            <g key={i}>
-              <rect x="912" y={y} width="12" height="12" fill={t.hex} rx="1" />
-              <text x="932" y={y + 10} fontFamily="monospace" fontSize="8" fill="#666" letterSpacing={0.5}>{t.name}</text>
-              <text x="990" y={y + 10} fontFamily="monospace" fontSize="8" fill="#444" letterSpacing={0.5}>{t.hex}</text>
-            </g>
-          );
-        })}
-
-        {/* ── CENTER CANVAS ── */}
-
-        {/* Toolbar */}
-        <rect x="200" y="0" width="700" height="36" fill="#141414" />
-        <line x1="200" y1="36" x2="900" y2="36" stroke="#2D2D2D" strokeWidth="1" />
-
-        {/* Tool buttons */}
-        {["V", "F", "T", "P"].map((label, t) => (
-          <g key={t}>
-            <rect x={218 + t * 28} y="9" width="18" height="18" rx="2" fill={t === 0 ? "#FFD600" : "#1E1E1E"} />
-            <text x={223 + t * 28} y="22" fontFamily="monospace" fontSize="9" fill={t === 0 ? "#0A0A0A" : "#444"}>{label}</text>
-          </g>
-        ))}
-        <line x1="340" y1="11" x2="340" y2="25" stroke="#2D2D2D" strokeWidth="1" />
-        <text x="356" y="23" fontFamily="monospace" fontSize="9" fill="#555" letterSpacing={1}>100%</text>
-
-        {/* Rulers */}
-        <rect x="200" y="36" width="700" height="16" fill="#131313" />
-        {Array.from({ length: 35 }, (_, i) => (
-          <g key={`rh${i}`}>
-            <rect x={200 + i * 20} y="36" width="1" height={i % 5 === 0 ? 8 : 4} fill="#2A2A2A" />
-            {i % 5 === 0 && (
-              <text x={202 + i * 20} y="50" fontFamily="monospace" fontSize="6" fill="#333">{i * 20}</text>
-            )}
-          </g>
-        ))}
-        <rect x="200" y="52" width="16" height="528" fill="#131313" />
-        {Array.from({ length: 26 }, (_, i) => (
-          <g key={`rv${i}`}>
-            <rect x="200" y={52 + i * 20} width={i % 5 === 0 ? 8 : 4} height="1" fill="#2A2A2A" />
+        <line x1="880" y1="282" x2="1100" y2="282" stroke="#222" />
+        <text x="894" y="306" fontFamily="monospace" fontSize="9" fill="#FFD600" letterSpacing={2} fontWeight="700">BILL OF MATERIALS</text>
+        {[
+          ["EXTRUSION 2020", "x8"],
+          ["RAIL / M6 CAGE", "x4"],
+          ["SIDE PANEL", "x2"],
+          ["CASTER KIT", "x1"],
+          ["CABLE SPINE", "x1"],
+        ].map(([name, qty], i) => (
+          <g key={name}>
+            <text x="894" y={330 + i * 22} fontFamily="monospace" fontSize="8" fill="#666">{name}</text>
+            <text x="1086" y={330 + i * 22} textAnchor="end" fontFamily="monospace" fontSize="8" fill="#444">{qty}</text>
           </g>
         ))}
 
-        {/* ── Frame (selected) ── */}
-        <rect x="280" y="90" width="540" height="380" fill="#0A0A0A" stroke="#FFD600" strokeWidth="1.5" strokeDasharray="4 2" />
-        <text x="280" y="84" fontFamily="monospace" fontSize="8" fill="#FFD600" letterSpacing={1}>FRAME / HERO — 1100 x 580</text>
-
-        {/* Selection handles */}
-        {handles.map(([hx, hy], i) => (
-          <rect key={`h${i}`} x={hx - 3} y={hy - 3} width="6" height="6" fill="#FFD600" stroke="#0A0A0A" strokeWidth="1" />
-        ))}
-
-        {/* Mock UI inside the frame */}
-        {/* Navbar */}
-        <rect x="280" y="90" width="540" height="36" fill="#111111" />
-        <line x1="280" y1="126" x2="820" y2="126" stroke="#2D2D2D" strokeWidth="1" />
-        <rect x="295" y="102" width="44" height="10" rx="1" fill="#FFD600" opacity="0.9" />
-        <rect x="640" y="103" width="28" height="8" rx="1" fill="#222" />
-        <rect x="676" y="103" width="28" height="8" rx="1" fill="#222" />
-        <rect x="715" y="101" width="38" height="12" fill="#FFD600" />
-
-        {/* Headline blocks */}
-        <rect x="310" y="148" width="300" height="18" rx="1" fill="#F5F5F0" opacity="0.9" />
-        <rect x="310" y="172" width="220" height="18" rx="1" fill="#FFD600" opacity="0.9" />
-
-        {/* Subtext lines */}
-        <rect x="310" y="204" width="240" height="5" rx="1" fill="#444" />
-        <rect x="310" y="215" width="200" height="5" rx="1" fill="#333" />
-
-        {/* CTA buttons */}
-        <rect x="310" y="236" width="100" height="24" fill="#FFD600" />
-        <text x="325" y="252" fontFamily="monospace" fontSize="7" fill="#0A0A0A" fontWeight="700" letterSpacing={0.5}>START FREE</text>
-        <rect x="418" y="236" width="90" height="24" fill="none" stroke="#3D3D3D" strokeWidth="1.5" />
-        <text x="430" y="252" fontFamily="monospace" fontSize="7" fill="#555" letterSpacing={0.5}>VIEW DOCS</text>
-
-        {/* Code editor block */}
-        <rect x="310" y="280" width="490" height="168" fill="#161616" stroke="#222" strokeWidth="1" />
-        {/* Title bar */}
-        <rect x="310" y="280" width="490" height="18" fill="#1A1A1A" />
-        <circle cx="322" cy="289" r="3" fill="#FF5F57" />
-        <circle cx="332" cy="289" r="3" fill="#FEBC2E" />
-        <circle cx="342" cy="289" r="3" fill="#28C840" />
-        <text x="360" y="293" fontFamily="monospace" fontSize="7" fill="#333" letterSpacing={1}>preview.tsx — PixelCraft</text>
-
-        {/* Code lines */}
-        {codeLines.map((cl, i) => (
-          <rect key={`cl${i}`} x={cl.x} y={308 + i * 16} width={cl.w} height="5" rx="1" fill={cl.color} opacity="0.35" />
-        ))}
-
-        {/* Blinking cursor */}
-        <rect className="hero-cursor" x="465" y="340" width="6" height="10" fill="#FFD600" opacity="0.9" />
-
-        {/* ── Measurement guides ── */}
-        {/* Right side spacing */}
-        <line x1="820" y1="148" x2="860" y2="148" stroke="#FF6B35" strokeWidth="0.75" strokeDasharray="3 2" />
-        <line x1="820" y1="190" x2="860" y2="190" stroke="#FF6B35" strokeWidth="0.75" strokeDasharray="3 2" />
-        <line x1="850" y1="148" x2="850" y2="190" stroke="#FF6B35" strokeWidth="0.75" />
-        <text x="835" y="173" fontFamily="monospace" fontSize="7" fill="#FF6B35" letterSpacing={0.5}>42px</text>
-
-        {/* Gap guide */}
-        <line x1="310" y1="226" x2="310" y2="236" stroke="#60A5FA" strokeWidth="0.75" strokeDasharray="2 2" />
-        <line x1="410" y1="226" x2="410" y2="236" stroke="#60A5FA" strokeWidth="0.75" strokeDasharray="2 2" />
-        <text x="345" y="233" fontFamily="monospace" fontSize="7" fill="#60A5FA" letterSpacing={0.5}>12px</text>
-
-        {/* ── Bottom ticker ── */}
-        <line x1="200" y1="514" x2="900" y2="514" stroke="#2D2D2D" strokeWidth="1" />
-        <rect x="200" y="515" width="700" height="32" fill="#0F0F0F" />
-        <clipPath id="tickerClip">
-          <rect x="200" y="515" width="700" height="32" />
-        </clipPath>
-        <g clipPath="url(#tickerClip)">
-          <g className="hero-ticker-track">
-            {[...tickerItems, ...tickerItems].map((name, i) => (
-              <g key={`t${i}`}>
-                <circle cx={220 + i * 70} cy="531" r="3" fill="#FFD600" opacity="0.5" />
-                <text x={230 + i * 70} y="535" fontFamily="monospace" fontSize="8" fill="#444" letterSpacing={1.5}>{name}</text>
-              </g>
-            ))}
-          </g>
-        </g>
-
-        {/* ── Status bar ── */}
-        <line x1="200" y1="547" x2="900" y2="547" stroke="#222" strokeWidth="1" />
-        <rect x="200" y="548" width="700" height="32" fill="#0D0D0D" />
-        <circle className="hero-pulse" cx="220" cy="564" r="4" fill="#4ADE80" />
-        <text x="232" y="568" fontFamily="monospace" fontSize="8" fill="#555" letterSpacing={1}>READY</text>
-        <text x="330" y="568" fontFamily="monospace" fontSize="8" fill="#333" letterSpacing={1}>9 LAYERS</text>
-        <text x="430" y="568" fontFamily="monospace" fontSize="8" fill="#333" letterSpacing={1}>AUTO-LAYOUT ON</text>
-        <text x="600" y="568" fontFamily="monospace" fontSize="8" fill="#333" letterSpacing={1}>GRID: 12 COL</text>
-        <text x="730" y="568" fontFamily="monospace" fontSize="8" fill="#333" letterSpacing={1}>v2.0.1</text>
-
-        {/* Corner accents */}
-        <rect x="200" y="548" width="6" height="6" fill="#FFD600" opacity="0.5" />
-        <rect x="894" y="548" width="6" height="6" fill="#FF6B35" opacity="0.4" />
+        {/* Status bar */}
+        <line x1="220" y1="507" x2="880" y2="507" stroke="#222" />
+        <rect x="220" y="508" width="660" height="32" fill="#0D0D0D" />
+        <circle className="ar-pulse" cx="240" cy="524" r="4" fill="#4ADE80" />
+        <text x="252" y="528" fontFamily="monospace" fontSize="8" fill="#555" letterSpacing={1}>ALL SYSTEMS NOMINAL</text>
+        <text x="440" y="528" fontFamily="monospace" fontSize="8" fill="#333" letterSpacing={1}>{totalU}U POPULATED</text>
+        <text x="570" y="528" fontFamily="monospace" fontSize="8" fill="#333" letterSpacing={1}>8 DRIVES / 96TB</text>
+        <text x="760" y="528" fontFamily="monospace" fontSize="8" fill="#333" letterSpacing={1}>REV.C</text>
       </svg>
     </>
   );

@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 
 const links = [
-  { label: "FEATURES",  section: "features"  },
-  { label: "COMPARE",   section: "comparison"},
-  { label: "SHOWCASE",  section: "showcase"  },
+  { label: "PRODUCTS",  section: "products"  },
+  { label: "PROJECTS",  section: "projects"  },
+  { label: "UPDATES",   section: "updates"   },
+  { label: "ROADMAP",   section: "roadmap"   },
   { label: "FAQ",       section: "faq"       },
-  { label: "PRICING",   section: "pricing"   },
 ];
 
 function scrollTo(id: string) {
@@ -60,9 +60,9 @@ export default function Navbar() {
 
         {/* ── Logo ── */}
         <a href="#" className="flex items-center gap-[10px] shrink-0 group">
-          <span className="w-[10px] h-[10px] bg-[#FFD600] group-hover:scale-110 transition-transform" />
+          <span className="w-[10px] h-[10px] bg-[#FFD600] group-hover:scale-110 transition-transform" aria-hidden="true" />
           <span className="font-grotesk text-[13px] font-bold text-[#F5F5F0] tracking-[2.5px]">
-            PIXELCRAFT
+            ARUDA LABS
           </span>
         </a>
 
@@ -96,16 +96,10 @@ export default function Navbar() {
         {/* ── Desktop CTA ── */}
         <div className="hidden md:flex items-center gap-[14px]">
           <a
-            href="#"
-            className="font-ibm-mono text-[10px] text-[#555] tracking-[1.5px] hover:text-[#F5F5F0] transition-colors"
-          >
-            LOG IN
-          </a>
-          <a
-            href="#"
+            href="#contact"
             className="font-grotesk text-[11px] font-bold text-[#0A0A0A] bg-[#FFD600] tracking-[1.5px] px-[18px] py-[9px] hover:bg-[#F5F5F0] transition-colors"
           >
-            START FREE
+            CONTACT
           </a>
         </div>
 
@@ -114,6 +108,7 @@ export default function Navbar() {
           className="md:hidden flex flex-col gap-[5px] p-2 -mr-2"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
           <span
             className="block w-[20px] h-[1.5px] bg-[#F5F5F0] transition-transform duration-200 origin-center"
@@ -159,12 +154,12 @@ export default function Navbar() {
             );
           })}
           <div className="flex flex-col gap-[10px] pt-5">
-            <a href="#" className="font-ibm-mono text-[12px] text-[#555] tracking-[1.5px]">LOG IN</a>
             <a
-              href="#"
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
               className="font-grotesk text-[11px] font-bold text-[#0A0A0A] bg-[#FFD600] tracking-[1.5px] px-[18px] py-[11px] text-center hover:bg-[#F5F5F0] transition-colors"
             >
-              START FREE
+              CONTACT
             </a>
           </div>
         </nav>

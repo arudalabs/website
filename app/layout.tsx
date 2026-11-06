@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -15,9 +15,14 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PixelCraft — Build Without Limits",
+  title: "Aruda Labs — Modular Server Racks, NAS Chassis & Homelab Hardware",
   description:
-    "The industrial-grade design system for builders who don't compromise.",
+    "Aruda Labs designs modular server rack systems, NAS chassis, and homelab infrastructure built on open specs and standard parts.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

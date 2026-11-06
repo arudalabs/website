@@ -1,17 +1,17 @@
 const stats = [
-  { value: "10K+", label: "ACTIVE BUILDERS", border: true },
-  { value: "99.9%", label: "UPTIME SLA", border: true },
-  { value: "4PX", label: "GRID BASE UNIT", border: true },
-  { value: "200+", label: "COMPONENTS", border: false },
+  { value: "2020", label: "EXTRUSION STANDARD", border: true },
+  { value: "M6", label: "UNIVERSAL FASTENER", border: true },
+  { value: "100%", label: "OPEN CAD FILES", border: true },
+  { value: "0", label: "PROPRIETARY SCREWS", border: false },
 ];
 
 export default function Stats() {
   return (
     <section className="flex flex-col w-full bg-[#FFD600] py-12 px-6 md:py-[80px] md:px-[120px]">
       <span className="font-ibm-mono text-[12px] font-bold text-[#0A0A0A] tracking-[3px]">
-        [03] // BY THE NUMBERS
+        [02] // BUILT ON STANDARDS
       </span>
-      <div className="h-8 md:h-[32px]" />
+      <div className="h-8" />
       <div className="grid grid-cols-2 md:flex w-full gap-[2px] md:gap-0">
         {stats.map((stat, i) => (
           <div
@@ -26,7 +26,7 @@ export default function Stats() {
             <span className="font-grotesk text-[40px] md:text-[64px] font-bold text-[#0A0A0A] tracking-[-2px] leading-none">
               {stat.value}
             </span>
-            <span className="font-ibm-mono text-[10px] md:text-[12px] font-bold text-[#1A1A1A] tracking-[2px]">
+            <span className="font-ibm-mono text-[10px] md:text-[12px] font-bold text-[#1A1A1A] tracking-[2px] text-center">
               {stat.label}
             </span>
           </div>
