@@ -13,6 +13,15 @@ const channels = [
   { label: "LOCATION", value: "DESIGNED + TESTED IN-HOUSE", href: undefined },
 ];
 
+const socials = [
+  { label: "GITHUB", handle: "@aruda-labs", href: "https://github.com/aruda-labs" },
+  { label: "X / TWITTER", handle: "@arudalabs", href: "https://x.com/arudalabs" },
+  { label: "YOUTUBE", handle: "@arudalabs", href: "https://youtube.com/@arudalabs" },
+  { label: "REDDIT", handle: "r/arudalabs", href: "https://reddit.com/r/arudalabs" },
+  { label: "DISCORD", handle: "COMMUNITY SERVER", href: "https://discord.gg/arudalabs" },
+  { label: "INSTAGRAM", handle: "@arudalabs", href: "https://instagram.com/arudalabs" },
+];
+
 const inputClass =
   "w-full bg-[#0A0A0A] border border-[#2D2D2D] px-4 py-3 font-ibm-mono text-[13px] text-[#F5F5F0] placeholder:text-[#444444] focus:outline-none focus:border-[#FFD600] transition-colors";
 const labelClass = "font-ibm-mono text-[10px] font-bold text-[#888888] tracking-[2px]";
@@ -69,6 +78,28 @@ export default function Contact() {
               </div>
             ))}
           </dl>
+          <div className="flex flex-col gap-4">
+            <h3 className="font-ibm-mono text-[10px] font-bold text-[#888888] tracking-[2px]">FOLLOW THE BUILD</h3>
+            <ul className="grid grid-cols-2 gap-px bg-[#1D1D1D] border border-[#1D1D1D]">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col gap-1 h-full bg-[#0A0A0A] px-4 py-4 hover:bg-[#111111] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#FFD600] transition-colors"
+                  >
+                    <span className="flex items-center justify-between font-grotesk text-[12px] font-bold text-[#F5F5F0] tracking-[2px] group-hover:text-[#FFD600] transition-colors">
+                      {s.label}
+                      <span aria-hidden="true" className="text-[#555555] group-hover:text-[#FFD600] transition-colors">{"->"}</span>
+                    </span>
+                    <span className="font-ibm-mono text-[10px] text-[#555555] tracking-[1px]">{s.handle}</span>
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 flex-1 bg-[#111111] border border-[#2D2D2D] p-6 md:p-10">
