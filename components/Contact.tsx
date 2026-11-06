@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import SectionHeader from "./SectionHeader";
 
-const CONTACT_EMAIL = "hello@arudalabs.com";
+const CONTACT_EMAIL = "contact@arudalabs.com";
 
 const topics = ["GENERAL", "BETA PROGRAM", "WHOLESALE / RESELLER", "PRESS", "ENGINEERING COLLAB"];
 
@@ -46,7 +46,8 @@ export default function Contact() {
             title={"LET'S BUILD\nSOMETHING."}
             subtitle="BETA ACCESS, RESELLER INQUIRIES, CUSTOM RACK BUILDS, OR JUST A QUESTION ABOUT YOUR LAB. A HUMAN READS EVERY MESSAGE."
             titleWidth="w-full"
-            subtitleWidth="w-full"
+            subtitleWidth="w-full mt-[5px] ml-[3px]"
+            subtitleSize="text-[10px] md:text-[14px]"
           />
           <dl className="flex flex-col border-t border-t-[#1D1D1D]">
             {channels.map((c) => (

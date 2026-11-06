@@ -8,6 +8,7 @@ interface SectionHeaderProps {
   subtitle?: string;
   titleWidth?: string;
   subtitleWidth?: string;
+  subtitleSize?: string;
 }
 
 export default function SectionHeader({
@@ -16,6 +17,7 @@ export default function SectionHeader({
   subtitle,
   titleWidth = "w-full max-w-[700px]",
   subtitleWidth = "w-full max-w-[600px]",
+  subtitleSize = "text-[10px] md:text-[13px]",
 }: SectionHeaderProps) {
   return (
     <div className="flex flex-col gap-[16px] w-full">
@@ -29,7 +31,7 @@ export default function SectionHeader({
       </h2>
       {subtitle && (
         <p
-          className={`font-ibm-mono text-[10px] md:text-[13px] text-[#666666] tracking-[0.5px] md:tracking-[1px] leading-[1.6] text-pretty ${subtitleWidth}`}
+          className={`font-ibm-mono ${subtitleSize} text-[#666666] tracking-[0.5px] md:tracking-[1px] leading-[1.6] text-pretty ${subtitleWidth}`}
         >
           <GlitchText text={subtitle} speed={20} delay={350} />
         </p>
