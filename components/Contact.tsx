@@ -15,11 +15,11 @@ const channels = [
 
 const socials = [
   { label: "GITHUB", handle: "@aruda-labs", href: "https://github.com/aruda-labs" },
-  { label: "X / TWITTER", handle: "@arudalabs", href: "https://x.com/arudalabs" },
+  { label: "FACEBOOK", handle: "@arudaofficial", href: "https://facebook.com/arudaofficial" },
   { label: "YOUTUBE", handle: "@arudalabs", href: "https://youtube.com/@arudalabs" },
   { label: "REDDIT", handle: "r/arudalabs", href: "https://reddit.com/r/arudalabs" },
   { label: "DISCORD", handle: "COMMUNITY SERVER", href: "https://discord.gg/arudalabs" },
-  { label: "INSTAGRAM", handle: "@arudalabs", href: "https://instagram.com/arudalabs" },
+  { label: "INSTAGRAM", handle: "@arudaofficial", href: "https://instagram.com/arudaofficial" },
 ];
 
 const inputClass =
