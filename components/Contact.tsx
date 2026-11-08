@@ -14,7 +14,7 @@ const channels = [
 ];
 
 const socials = [
-  { label: "GITHUB", handle: "@aruda-labs", href: "https://github.com/aruda-labs" },
+  { label: "GITHUB", handle: "@arudalabs", href: "https://github.com/arudalabs" },
   { label: "FACEBOOK", handle: "@arudaofficial", href: "https://facebook.com/arudaofficial" },
   { label: "YOUTUBE", handle: "@arudalabs", href: "https://youtube.com/@arudalabs" },
   { label: "REDDIT", handle: "r/arudalabs", href: "https://reddit.com/r/arudalabs" },
