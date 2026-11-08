@@ -20,11 +20,17 @@ export const metadata: Metadata = {
   title: "Aruda Labs — Modular Server Racks, NAS Chassis & Homelab Hardware",
   description:
     "Aruda Labs designs modular server rack systems, NAS chassis, and homelab infrastructure built on open specs and standard parts.",
-  icons: {
+  
+    robots: {
+    index: true,
+    follow: true,
+    },
+
+    icons: {
     icon: "/images/aruda-logo.png",
     shortcut: "/images/aruda-logo.png",
     apple: "/images/aruda-logo.png",
-  },
+    },
 };
 
 export const viewport: Viewport = {
