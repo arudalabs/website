@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+// @ts-ignore -- Next.js handles global CSS imports at build time.
 import "./globals.css";
 import ResizeObserverErrorGuard from "@/components/ResizeObserverErrorGuard";
 
@@ -19,6 +20,11 @@ export const metadata: Metadata = {
   title: "Aruda Labs — Modular Server Racks, NAS Chassis & Homelab Hardware",
   description:
     "Aruda Labs designs modular server rack systems, NAS chassis, and homelab infrastructure built on open specs and standard parts.",
+  icons: {
+    icon: "/images/aruda-logo.png",
+    shortcut: "/images/aruda-logo.png",
+    apple: "/images/aruda-logo.png",
+  },
 };
 
 export const viewport: Viewport = {
