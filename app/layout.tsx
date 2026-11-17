@@ -17,10 +17,15 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://arudalabs.com"),
   title: "Aruda Labs — Modular Server Racks, NAS Chassis & Homelab Hardware",
   description:
     "Aruda Labs designs modular server rack systems, NAS chassis, and homelab infrastructure built on open specs and standard parts.",
   
+    alternates: {
+      canonical: "https://arudalabs.com",
+    },
+    
     robots: {
     index: true,
     follow: true,
