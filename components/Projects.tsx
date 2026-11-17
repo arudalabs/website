@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import SectionHeader from "./SectionHeader";
 
 const projects = [
   {
     code: "AR-12",
+    slug: "ar-12",
     name: "MODULAR OPEN RACK",
     image: "/images/project-rack.png",
     alt: "Black aluminum extrusion 12U open-frame rack with yellow brackets, holding servers and a patch panel",
@@ -19,6 +21,7 @@ const projects = [
   },
   {
     code: "AR-N8",
+    slug: "ar-n8",
     name: "8-BAY NAS CHASSIS",
     image: "/images/project-nas.png",
     alt: "Matte black 8-bay NAS chassis with hot-swap drive trays and small yellow status LEDs",
@@ -34,6 +37,7 @@ const projects = [
   },
   {
     code: "AR-M10",
+    slug: "ar-m10",
     name: "10\" MINI LAB KIT",
     image: "/images/project-homelab.png",
     alt: "Compact 10-inch homelab rack with network switch, short patch cables, and mini PCs on shelves",
@@ -63,7 +67,8 @@ export default function Projects() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-[2px] w-full">
         {projects.map((project) => (
-          <article key={project.code} className="flex flex-col bg-[#111111] border border-[#2D2D2D] group">
+          <Link key ={project.code} href={`/products/${project.slug}`} className="block">
+          <article className="flex flex-col bg-[#111111] border border-[#2D2D2D] group">
             <div className="relative w-full aspect-[4/3] overflow-hidden border-b border-b-[#2D2D2D] bg-[#0A0A0A]">
               <Image
                 src={project.image}
@@ -95,6 +100,7 @@ export default function Projects() {
               </dl>
             </div>
           </article>
+          </Link>
         ))}
       </div>
     </section>
